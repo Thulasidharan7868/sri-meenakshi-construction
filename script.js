@@ -229,8 +229,8 @@ contactForm.addEventListener("submit", async function (event) {
 
     try {
 
-        const response = await fetch(
-            "fetch("https://sri-meenakshi-construction-production.up.railway.app/api/contact", {",
+        const response = await fetch
+          ("https://sri-meenakshi-construction-production.up.railway.app/api/contact",
             {
                 method: "POST",
 
