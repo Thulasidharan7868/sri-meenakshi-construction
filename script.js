@@ -5,56 +5,71 @@
 const menuBtn = document.getElementById("menuBtn");
 const navMenu = document.getElementById("navMenu");
 
-menuBtn.addEventListener("click", function () {
+if (menuBtn && navMenu) {
 
-    navMenu.classList.toggle("active");
+    menuBtn.addEventListener("click", function () {
 
-    const icon = menuBtn.querySelector("i");
-
-    if (navMenu.classList.contains("active")) {
-
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-xmark");
-
-    } else {
-
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
-
-    }
-
-});
-
-
-/* Close menu after clicking a link */
-
-const navLinks = document.querySelectorAll(".nav-menu a");
-
-navLinks.forEach(function (link) {
-
-    link.addEventListener("click", function () {
-
-        navMenu.classList.remove("active");
+        navMenu.classList.toggle("active");
 
         const icon = menuBtn.querySelector("i");
 
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
+        if (icon) {
+
+            if (navMenu.classList.contains("active")) {
+
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-xmark");
+
+            } else {
+
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
+
+            }
+
+        }
 
     });
 
-});
+
+    /* Close menu after clicking a link */
+
+    const navLinks = document.querySelectorAll(".nav-menu a");
+
+    navLinks.forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            navMenu.classList.remove("active");
+
+            const icon = menuBtn.querySelector("i");
+
+            if (icon) {
+
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
+
+            }
+
+        });
+
+    });
+
+}
 
 
 /* =========================
    SCROLL REVEAL
 ========================= */
 
-const revealElements = document.querySelectorAll(".reveal");
+const revealElements =
+    document.querySelectorAll(".reveal");
+
 
 function revealOnScroll() {
 
-    const windowHeight = window.innerHeight;
+    const windowHeight =
+        window.innerHeight;
 
     revealElements.forEach(function (element) {
 
@@ -71,18 +86,27 @@ function revealOnScroll() {
 
 }
 
-window.addEventListener("scroll", revealOnScroll);
 
-window.addEventListener("load", revealOnScroll);
+window.addEventListener(
+    "scroll",
+    revealOnScroll
+);
+
+window.addEventListener(
+    "load",
+    revealOnScroll
+);
 
 
 /* =========================
    PROJECT COUNTERS
 ========================= */
 
-const counters = document.querySelectorAll(".counter");
+const counters =
+    document.querySelectorAll(".counter");
 
 let countersStarted = false;
+
 
 function startCounters() {
 
@@ -107,12 +131,17 @@ function startCounters() {
         counters.forEach(function (counter) {
 
             const target =
-                Number(counter.getAttribute("data-target"));
+                Number(
+                    counter.getAttribute("data-target")
+                );
 
             let current = 0;
 
             const increment =
-                Math.max(1, Math.ceil(target / 50));
+                Math.max(
+                    1,
+                    Math.ceil(target / 50)
+                );
 
             const timer =
                 setInterval(function () {
@@ -127,7 +156,8 @@ function startCounters() {
 
                     }
 
-                    counter.textContent = current + "+";
+                    counter.textContent =
+                        current + "+";
 
                 }, 30);
 
@@ -137,9 +167,16 @@ function startCounters() {
 
 }
 
-window.addEventListener("scroll", startCounters);
 
-window.addEventListener("load", startCounters);
+window.addEventListener(
+    "scroll",
+    startCounters
+);
+
+window.addEventListener(
+    "load",
+    startCounters
+);
 
 
 /* =========================
@@ -152,40 +189,53 @@ const showMoreBtn =
 const hiddenProjects =
     document.querySelectorAll(".hidden-project");
 
-showMoreBtn.addEventListener("click", function () {
 
-    const isHidden =
-        hiddenProjects[0].style.display === "" ||
-        hiddenProjects[0].style.display === "none";
+if (showMoreBtn && hiddenProjects.length > 0) {
 
-    hiddenProjects.forEach(function (project) {
+    showMoreBtn.addEventListener(
+        "click",
+        function () {
 
-        if (isHidden) {
+            const isHidden =
+                hiddenProjects[0].style.display === "" ||
+                hiddenProjects[0].style.display === "none";
 
-            project.style.display = "block";
 
-        } else {
+            hiddenProjects.forEach(
+                function (project) {
 
-            project.style.display = "none";
+                    if (isHidden) {
+
+                        project.style.display =
+                            "block";
+
+                    } else {
+
+                        project.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+
+            if (isHidden) {
+
+                showMoreBtn.innerHTML =
+                    'Show Less Projects <i class="fas fa-chevron-up"></i>';
+
+            } else {
+
+                showMoreBtn.innerHTML =
+                    'Show More Projects <i class="fas fa-chevron-down"></i>';
+
+            }
 
         }
+    );
 
-    });
-
-
-    if (isHidden) {
-
-        showMoreBtn.innerHTML =
-            'Show Less Projects <i class="fas fa-chevron-up"></i>';
-
-    } else {
-
-        showMoreBtn.innerHTML =
-            'Show More Projects <i class="fas fa-chevron-down"></i>';
-
-    }
-
-});
+}
 
 
 /* =========================
@@ -199,82 +249,140 @@ const formMessage =
     document.getElementById("formMessage");
 
 
-contactForm.addEventListener("submit", async function (event) {
+if (contactForm && formMessage) {
 
-    event.preventDefault();
+    contactForm.addEventListener(
+        "submit",
+        async function (event) {
 
-    const formData = {
-
-        name:
-            document.getElementById("name").value,
-
-        email:
-            document.getElementById("email").value,
-
-        phone:
-            document.getElementById("phone").value,
-
-        message:
-            document.getElementById("message").value
-
-    };
+            event.preventDefault();
 
 
-    formMessage.textContent =
-        "Sending message...";
+            /* Get form values */
 
-    formMessage.style.color =
-        "rgb(124, 58, 237)";
+            const formData = {
+
+                name:
+                    document
+                        .getElementById("name")
+                        .value
+                        .trim(),
+
+                email:
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim(),
+
+                phone:
+                    document
+                        .getElementById("phone")
+                        .value
+                        .trim(),
+
+                message:
+                    document
+                        .getElementById("message")
+                        .value
+                        .trim()
+
+            };
 
 
-    try {
+            /* Show sending message */
 
-        const response = await fetch
-          ("https://sri-meenakshi-construction-production.up.railway.app/api/contact",
-            {
-                method: "POST",
+            formMessage.textContent =
+                "Sending message...";
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            formMessage.style.color =
+                "rgb(124, 58, 237)";
 
-                body: JSON.stringify(formData)
+
+            try {
+
+                /* Send data to Railway Spring Boot */
+
+                const response =
+                    await fetch(
+                        "https://sri-meenakshi-construction-production.up.railway.app/api/contact",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(formData)
+                        }
+                    );
+
+
+                /* Read server response */
+
+                const responseText =
+                    await response.text();
+
+
+                console.log(
+                    "Server Status:",
+                    response.status
+                );
+
+                console.log(
+                    "Server Response:",
+                    responseText
+                );
+
+
+                /* Check HTTP status */
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `Server error ${response.status}: ${responseText}`
+                    );
+
+                }
+
+
+                /* Success */
+
+                formMessage.textContent =
+                    "Message sent successfully!";
+
+                formMessage.style.color =
+                    "rgb(22, 163, 74)";
+
+
+                /* Clear form */
+
+                contactForm.reset();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Contact form error:",
+                    error
+                );
+
+
+                /* Show actual error */
+
+                formMessage.textContent =
+                    "Unable to send message. Please try again.";
+
+                formMessage.style.color =
+                    "rgb(220, 38, 38)";
+
             }
-        );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Unable to send message"
-            );
 
         }
+    );
 
-
-        formMessage.textContent =
-            "Message sent successfully!";
-
-        formMessage.style.color =
-            "rgb(22, 163, 74)";
-
-
-        contactForm.reset();
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        formMessage.textContent =
-            "Unable to send message. Please try again.";
-
-        formMessage.style.color =
-            "rgb(220, 38, 38)";
-
-    }
-
-});
+}
 
 
 /* =========================
@@ -284,17 +392,26 @@ contactForm.addEventListener("submit", async function (event) {
 const navbar =
     document.querySelector(".navbar");
 
-window.addEventListener("scroll", function () {
 
-    if (window.scrollY > 50) {
+if (navbar) {
 
-        navbar.style.boxShadow =
-            "0 8px 25px rgba(33, 24, 45, 0.08)";
+    window.addEventListener(
+        "scroll",
+        function () {
 
-    } else {
+            if (window.scrollY > 50) {
 
-        navbar.style.boxShadow = "none";
+                navbar.style.boxShadow =
+                    "0 8px 25px rgba(33, 24, 45, 0.08)";
 
-    }
+            } else {
 
-});
+                navbar.style.boxShadow =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
